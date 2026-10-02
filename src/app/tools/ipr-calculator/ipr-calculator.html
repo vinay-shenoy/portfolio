@@ -1,0 +1,215 @@
+<div class="container-fluid py-4 px-4">
+
+  <div class="row g-4">
+
+    <!-- LEFT COLUMN -->
+
+    <div class="col-lg-6">
+
+      <div class="card shadow-sm border-0 rounded-3">
+
+        <div class="card-body p-4">
+
+          <h4 class="card-title text-primary mb-4">Reservoir & Well Parameters</h4>
+
+          <!-- Flow Regime -->
+
+          <div class="mb-3">
+            <label for="flowRegime" class="form-label fw-bold">Flow Regime</label>
+            <select id="flowRegime" class="form-select" [(ngModel)]="flowRegime">
+              <option value="Pseudo-Steady State Flow">
+                Pseudo-Steady State Flow
+              </option>
+              <option value="Transient Flow">
+                Transient Flow
+              </option>
+              <option value="Steady State Flow">
+                Steady State Flow
+              </option>
+            </select>
+          </div>
+
+          <!-- INPUT GRID -->
+
+          <div class="row g-3">
+
+            <!-- Porosity -->
+
+            <div class="col-sm-6">
+              <label class="form-label fw-semibold">Porosity (ϕ)</label>
+              <input type="number" class="form-control" step="any" [(ngModel)]="porosity">
+            </div>
+
+            <!-- Permeability -->
+
+            <div class="col-sm-6">
+              <label class="form-label fw-semibold">
+                Permeability (k, md)
+              </label>
+              <input type="number" class="form-control" step="any" [(ngModel)]="permeability">
+            </div>
+
+            <!-- Pay Thickness -->
+
+            <div class="col-sm-6">
+              <label class="form-label fw-semibold">
+                Pay Thickness (h, ft)
+              </label>
+              <input type="number" class="form-control" step="any" [(ngModel)]="payThickness">
+            </div>
+
+
+            <!-- Reservoir Pressure -->
+
+            <div class="col-sm-6">
+              <label class="form-label fw-semibold">
+                Reservoir Press
+                (P<sub>e</sub>, psi)
+              </label>
+              <input type="number" class="form-control" step="any" [(ngModel)]="reservoirPressure">
+            </div>
+
+
+            <!-- Bubble Point -->
+
+            <div class="col-sm-6">
+              <label class="form-label fw-semibold">
+                Bubble Pt Press
+                (P<sub>b</sub>, psi)
+              </label>
+              <input type="number" class="form-control" step="any" [(ngModel)]="bubblePressure">
+            </div>
+
+            <!-- Bo -->
+
+            <div class="col-sm-6">
+              <label class="form-label fw-semibold">
+                Oil FVF
+                (B<sub>o</sub>, bbl/STB)
+              </label>
+              <input type="number" class="form-control" step="any" [(ngModel)]="oilFormationVolumeFactor">
+            </div>
+
+            <!-- Viscosity -->
+
+            <div class="col-sm-6">
+              <label class="form-label fw-semibold">Viscosity (μ, cp)</label>
+              <input type="number" class="form-control" step="any" [(ngModel)]="viscosity">
+            </div>
+
+            <!-- Compressibility -->
+
+            <div class="col-sm-6">
+              <label class="form-label fw-semibold">
+                Compressibility
+                (Ct, psi⁻¹)
+              </label>
+              <input type="number" class="form-control" step="any" [(ngModel)]="compressibility">
+            </div>
+
+
+            <!-- Drainage Radius -->
+
+            <div class="col-sm-6">
+              <label class="form-label fw-semibold">
+                Drainage radius
+                (r<sub>e</sub>, ft)
+              </label>
+              <input type="number" class="form-control" step="any" [(ngModel)]="drainageRadius">
+            </div>
+
+            <!-- Well Radius -->
+
+            <div class="col-sm-6">
+
+              <label class="form-label fw-semibold">
+                Well Radius
+                (r<sub>w</sub>, ft)
+              </label>
+
+              <input type="number" class="form-control" step="any" [(ngModel)]="wellRadius">
+            </div>
+
+
+            <!-- Skin -->
+
+            <div class="col-sm-6">
+
+              <label class="form-label fw-semibold">Skin Factor (S)</label>
+              <input type="number" class="form-control" step="any" [(ngModel)]="skin">
+
+            </div>
+
+            <!-- Time -->
+
+            <div class="col-sm-6">
+              <label class="form-label fw-semibold">
+                Time
+              </label>
+              <div class="input-group">
+                <input type="number" class="form-control" step="any" [(ngModel)]="time">
+                <button type="button" class="btn btn-outline-secondary" (click)="toggleTimeUnit()">{{ timeUnit
+                  }}</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- CALCULATE BUTTON -->
+
+          <button class="btn btn-primary w-100 mt-4 py-2 fw-bold" (click)="calculateIPR()">Calculate & Plot IPR</button>
+
+          <!-- OUTPUT RESULTS -->
+
+          <div class="row g-2 mt-3 pt-3 border-top border-secondary-subtle text-center">
+
+            <!-- J -->
+
+            <div class="col-4">
+              <div class="bg-light p-2 rounded border">
+                <p class="text-muted d-block mb-1">Productivity Index (J)</p>
+                <strong class="text-primary fs-6">{{productivityIndex !== null? productivityIndex.toFixed(4):
+                  '-'}}</strong>
+              </div>
+            </div>
+
+            <!-- qv -->
+
+            <div class="col-4">
+              <div class="bg-light p-2 rounded border">
+                <p class="text-muted d-block mb-1">q<sub>v</sub> (STB/d)</p>
+                <strong class="text-primary fs-6">{{qv !== null? qv.toFixed(2): '-'}}</strong>
+              </div>
+            </div>
+
+            <!-- qb -->
+
+            <div class="col-4">
+              <div class="bg-light p-2 rounded border">
+                <p class="text-muted d-block mb-1">
+                  q<sub>b</sub> (STB/d)
+                </p>
+                <strong class="text-primary fs-6">{{qb !== null? qb.toFixed(2): '-'}}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN - CHART -->
+
+    <div class="col-lg-6">
+      <div class="card shadow-sm border-0 rounded-3 h-100">
+        <div class="card-body p-4 d-flex flex-column">
+          <h4 class="card-title text-primary mb-4">
+            Inflow Performance Relationship (IPR)
+          </h4>
+          <div class="flex-grow-1 position-relative">
+            <canvas #iprChart></canvas>
+          </div>
+          <button class="btn btn-primary mt-3" (click)="saveIPRChart()">Save as Image</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
